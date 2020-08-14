@@ -15,7 +15,7 @@ export default function GetStartedPageOne() {
     <Fragment>
     <div class="split left">
       <div class="centered">
-        <img src={helperimg} alt="Avatar woman" />
+        <img src={helperimg} alt="help" />
         <h2>Video Type</h2>
         <p>Select the type of video you want to make</p>
       </div>
