@@ -5,10 +5,17 @@ import Footer from '../Footer'
 import '../../App.css';
 import { Link, useHistory } from 'react-router-dom';
 
-export default function HomePage() {
+export default function HomePage(props) {
   const history = useHistory()
   function handleClick () {
-    history.push("/login")
+    console.log(props.loggedIn)
+    if (props.loggedIn) {
+      history.push("/get-started")
+    }
+    else {
+      history.push("/login")
+    }
+
   }
   return (
     <div className="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">

@@ -11,12 +11,31 @@ export default function SignInOut () {
   function handleSubmit (e) {
 
     e.preventDefault()
-    if (username === "admin" && password === "password") {
-      history.push("/get-started");
+    // if (username === "admin" && password === "password") {
+    //   history.push("/get-started");
+    // }
+    // else {
+    //   alert("Invalid credentials");
+    // }
+
+    let data = {
+      'username': username,
+      'password': password
     }
-    else {
-      alert("Invalid credentials");
-    }
+
+    fetch('http://localhost:8000/token-auth/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(json => {
+        localStorage.setItem('video-token', json.token);
+        setUsername(json.username);
+        history.push("/get-started")
+      });
   }
     return (
     <main role="main" className="inner cover">
