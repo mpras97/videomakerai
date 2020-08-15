@@ -103,14 +103,14 @@ def vertical_transition_by_in_out(img1, img2, out):
         out.write(final_image)
     return out
 
-def create_video(glob_location, file_name, fps=0.5, video_type=1):
+def create_video(files_location, file_name, fps=0.5, video_type=1):
     """
     video_type is 1 for colourful else 0 for vintage
     """
-    video_name = file_name + ".avi"
+    video_name = "./created_vids/" + file_name + ".avi"
     video_size = (640, 480)
     out = cv2.VideoWriter(video_name, cv2.VideoWriter_fourcc(*'DIVX'), fps, video_size)
-    for filename in glob_location:
+    for filename in files_location:
         img = cv2.imread(filename)
         resized = cv2.resize(img, video_size, interpolation=cv2.INTER_AREA)
         if video_type == 0:
@@ -118,6 +118,4 @@ def create_video(glob_location, file_name, fps=0.5, video_type=1):
         for i in range(20):
             out.write(resized)
 
-# out.release()
-
-
+    out.release()

@@ -8,6 +8,9 @@ export default function StockSelection() {
   let helperImg = require("../../static/img/help.png")
   const [images, setImages] = useState([]);
   const [imageTexts, setImageTexts] = useState([]);
+  const [uploadedCount, setUploadedCount] = useState(0)
+  const [totalCount, setTotalCount] = useState(0)
+  const [videoSessionId, setVideoSessionId] = useState(null)
 
   function saveImages(e) {
 
@@ -37,7 +40,10 @@ export default function StockSelection() {
     })
       .then(res => res.json())
       .then(json => {
+        console.log(json)
+        setVideoSessionId(json.id)
         videoSessionID = json.id
+        setTotalCount(images.length)
         for ( let i = 0; i < images.length; i++) {
           const formData = new FormData();
           formData.set("uploaded_file", images[i])
@@ -52,18 +58,41 @@ export default function StockSelection() {
             .then(res => res.json())
             .then(json => {
               let token = localStorage.getItem("video-token")
-              if (token) {
-                history.push('/video-library')
-              }
-              else {
-                history.push('/login')
-              }
+              setUploadedCount(uploadedCount + 1)
+              // if (token) {
+              //   history.push('/video-library')
+              // }
+              // else {
+              //   history.push('/login')
+              // }
             })
             .catch(err => alert(err.message))
         }
-
+        console.log("Videos uploaded")
       })
       .catch(err => alert(err.message));
+  }
+
+  function createVideo () {
+    console.log("Started video creation. This will take a few minutes")
+    console.log(videoSessionId)
+    let data = {"video_session_id": videoSessionId}
+    fetch("http://localhost:8000/functionality/create_video/", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('video-token')}`
+      },
+      body: data,
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log("Completed")
+      })
+      .catch(err => {
+        console.log("error")
+        console.log(err)
+      })
   }
 
   function ImageUpload (e) {
@@ -102,6 +131,9 @@ export default function StockSelection() {
   //   imgTxts[name] = e.target.value
   //   setImageTexts(imgTxts)
   // }
+  console.log(totalCount)
+  console.log(uploadedCount)
+  console.log(videoSessionId)
   return (
     <Fragment>
       <div className="splitLeft left">
@@ -121,7 +153,10 @@ export default function StockSelection() {
         {/* {images ? images.forEach((imgSrc, index) => (<img src={imgSrc} id={`target_${index}`} />)) : null} */}
         <output id="list"></output><br/>
         <br/>
-        <Button variant="primary" onClick={saveImages}>Create video</Button>
+        <Button variant="primary" onClick={saveImages}>Upload images</Button>&emsp;
+        {totalCount-1 === uploadedCount && totalCount !== 0 && videoSessionId ? (
+          <Button variant="primary" onClick={createVideo}>Create Video</Button>
+        ) : null}
         </div>
       </div>
       <div className="splitRight right">
