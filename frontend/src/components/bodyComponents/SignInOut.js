@@ -11,7 +11,7 @@ export default function SignInOut () {
   function handleSubmit (e) {
 
     e.preventDefault()
-    
+
     let data = {
       'username': username,
       'password': password
