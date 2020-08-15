@@ -3,10 +3,6 @@ import { Link } from 'react-router-dom';
 
 export default function Navbar() {
 
-  const handle_logout = () => {
-    localStorage.removeItem('video-token');
-  };
-
   return (
     <>
     <nav className="nav nav-masthead justify-content-center">
@@ -14,9 +10,6 @@ export default function Navbar() {
         <a className="nav-link" href="#">Videos</a>
         <a className="nav-link" href="#">About</a>
       </nav>
-      <ul>
-        <li className="nav-link" onClick={handle_logout}>logout</li>
-      </ul>
     </>
   )
 }

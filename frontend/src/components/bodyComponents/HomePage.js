@@ -9,13 +9,18 @@ export default function HomePage(props) {
   const history = useHistory()
   function handleClick () {
     if (props.loggedIn) {
-      history.push("/get-started")
+      history.push("/video-library")
     }
     else {
       history.push("/login")
     }
 
-  }
+  }  
+  const handle_logout = () => {
+    localStorage.removeItem('video-token');
+    localStorage.removeItem('user-id')
+  };
+
   return (
     <div className="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <header className="masthead mb-auto">
@@ -28,7 +33,10 @@ export default function HomePage(props) {
       <h1 className="cover-heading">CREATE AN ANIMATION WITHOUT KNOWING HOW TO ANIMATE</h1>
       <p className="lead">VideoMakerAI lets you automatically create videos from a group of images and videos</p>
       <p className="lead">
-        <Button variant="secondary" onClick={handleClick}>Get Started</Button>
+        <Button variant="secondary" onClick={handleClick}>{!props.loggedIn ? `Get Started` : `Go To Your Library`}</Button>&emsp;
+        {props.loggedIn ? (
+          <Button variant="danger" onClick={handle_logout}>LogOut</Button>
+        ) : null}
       </p>
     </main>
         <Footer />  

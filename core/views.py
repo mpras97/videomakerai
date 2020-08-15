@@ -13,6 +13,7 @@ def current_user(request):
     Determine the current user by their token, and return their data
     """
 
+    print(request.data)
     serializer = UserSerializer(request.user)
     return Response(serializer.data)
 
@@ -31,3 +32,14 @@ class UserList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# class UserRetriveAPI(APIView):
+#     """
+#     Retrieve the current user details based upon the token
+#     """
+
+#     permission_classes = (permissions.AllowAny,)
+
+#     def get(self, request, format=None):
+#         serializer = 
