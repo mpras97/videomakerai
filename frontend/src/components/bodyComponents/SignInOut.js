@@ -11,13 +11,7 @@ export default function SignInOut () {
   function handleSubmit (e) {
 
     e.preventDefault()
-    // if (username === "admin" && password === "password") {
-    //   history.push("/get-started");
-    // }
-    // else {
-    //   alert("Invalid credentials");
-    // }
-
+    
     let data = {
       'username': username,
       'password': password

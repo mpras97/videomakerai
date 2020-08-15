@@ -8,7 +8,6 @@ import { Link, useHistory } from 'react-router-dom';
 export default function HomePage(props) {
   const history = useHistory()
   function handleClick () {
-    console.log(props.loggedIn)
     if (props.loggedIn) {
       history.push("/get-started")
     }
