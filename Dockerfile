@@ -21,4 +21,11 @@ WORKDIR /hackathon
 
 COPY . .
 
-RUN /usr/local/bin/pip3.6 install -r ./ImagineAR/requirements.txt
+RUN /usr/local/bin/pip3.6 install -r ./hackathon/requirements.txt
+
+ENV PYTHONUNBUFFERED 1
+
+COPY ./supervisor-config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+CMD ["/usr/bin/supervisord"]
+
