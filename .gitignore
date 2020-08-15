@@ -1,4 +1,5 @@
 venv/
+sample_vids/
 
 db.sqlite3
 __pycache__/
