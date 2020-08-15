@@ -5,6 +5,7 @@ import { useHistory } from "react-router"
 
 
 export default function GetStartedPageOne() {
+
   const history = useHistory();
   let helperimg = require("../../static/img/help.png")
   const [selectedOption, setSelectedOption] = useState("1");
