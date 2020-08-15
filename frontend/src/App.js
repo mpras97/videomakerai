@@ -2,14 +2,17 @@ import React, {useEffect, useState} from 'react';
 import HomePage from './components/bodyComponents/HomePage';
 import GetStartedPageOne from './components/bodyComponents/GetStartedPageOne';
 import StockSelection from './components/bodyComponents/StockSelection';
+import VideoLibrary from './components/bodyComponents/VideoLibrary'
+import SignupForm from './components/bodyComponents/SignupForm'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import SignInOut from './components/bodyComponents/SignInOut';
+import SignIn from './components/bodyComponents/SignIn';
 
 function App() {
 
   const [loggedIn, setLoggedIn] = useState(false);
-  const [username, setUsername] = useState("");
+  // const [username, setUsername] = useState("");
+  const [userId, setUserId] = useState(null)
 
 
   useEffect(() => {
@@ -24,18 +27,23 @@ function App() {
       })
         .then(res => res.json())
         .then(json => {
-          setUsername(json.username);
+          // setUsername(json.username);
+          setUserId(json.id)
+          localStorage.setItem('user-id', json.id)
         });
-    }});
+    }},[loggedIn]);
 
   return (
       <BrowserRouter>
 
         <Switch>
           <Route exact name="homepage" path="/" component={() => <HomePage loggedIn={loggedIn} /> } />
-          <Route exact name="signinout" path="/login" component={SignInOut} />
+          <Route exact name="signin" path="/login" component={SignIn} />
+          <Route exact name="signup"path="/signup" component={SignupForm} />
           <Route exact name="started1" path="/get-started" component={GetStartedPageOne} />
+          <Route exact name="videolibrary" path="/video-library" component={() => <VideoLibrary userId={userId} />} />
           <Route exact name="stockselection" path="/stock-selection/:vidType" component={StockSelection} />
+          {/*<Route exact name="videodetail" path="/videodetail/:vidDetail" component={StockSelection} />*/}
         </Switch>
     
       </BrowserRouter>
