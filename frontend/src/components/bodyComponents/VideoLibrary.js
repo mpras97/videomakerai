@@ -24,13 +24,16 @@ export default function VideoLibrary(props) {
         axios.get(`http://localhost:8000/functionality/video_session_list/${userId}/`, options)
           .then(json => {
             if (mounted) {
-              console.log(json.data)
               setVids(json.data);
               setFilteredVids(json.data);
             }
           })
           .catch(err => {
-            console.log(err)
+            if (err.response.status === 401) {
+              localStorage.removeItem('video-token');
+              localStorage.removeItem('user-id')
+              history.push("/")
+            }
           })
       } else {
         alert("Please login")

@@ -33,7 +33,8 @@ export default function SignInOut () {
         localStorage.setItem('user-id', json.id)
         setUsername(json.username);
         history.push("/")
-      });
+      })
+    .catch(err => console.log(err));
   }
     return (
       <Fragment>

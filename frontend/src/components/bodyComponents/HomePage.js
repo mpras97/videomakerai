@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 export default function HomePage(props) {
   const history = useHistory()
   function handleClick () {
-    if (props.loggedIn) {
+    if (localStorage.getItem('video-token')) {
       history.push("/video-library")
     }
     else {

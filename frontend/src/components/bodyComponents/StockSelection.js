@@ -17,16 +17,12 @@ export default function StockSelection() {
     * */
     let userId = localStorage.getItem("user-id")
     let videoSessionID = null
-    console.log(userId)
     let data = {
       'name': Math.random().toString(36).substring(7),
       'added_by': userId,
       'transforms': 'transforms',
       'session_type': 1
     }
-
-
-
     fetch('http://localhost:8000/functionality/create_video_session/', {
       method: 'POST',
       headers: {
@@ -59,7 +55,11 @@ export default function StockSelection() {
                 history.push('/login')
               }
             })
-            .catch(err => alert(err.message))
+            .catch(err => {
+              console.log('kdln')
+              alert(err.message)
+            }
+        )
         }
 
       })
