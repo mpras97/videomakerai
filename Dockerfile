@@ -21,7 +21,7 @@ WORKDIR /hackathon
 
 COPY . .
 
-RUN /usr/local/bin/pip3.6 install -r ./hackathon/requirements.txt
+RUN /usr/local/bin/pip3.6 install -r ./requirements.txt
 
 ENV PYTHONUNBUFFERED 1
 
