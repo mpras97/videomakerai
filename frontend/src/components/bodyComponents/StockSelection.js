@@ -6,7 +6,6 @@ import "../../static/css/stockselection.css"
 export default function StockSelection() {
   const history = useHistory();
   let helperImg = require("../../static/img/help.png")
-  const [image, setImage] = useState(null);
   const [images, setImages] = useState([]);
   const [imageTexts, setImageTexts] = useState([]);
 
@@ -31,7 +30,8 @@ export default function StockSelection() {
     fetch('http://localhost:8000/functionality/create_video_session/', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('video-token')}`,
       },
       body: JSON.stringify(data)
     })
@@ -44,7 +44,10 @@ export default function StockSelection() {
           formData.set("session", videoSessionID)
           fetch('http://localhost:8000/functionality/stock_upload/', {
             method: 'POST',
-            body: formData
+            body: formData,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('video-token')}`,
+            }
           })
             .then(res => res.json())
             .then(json => {
@@ -93,12 +96,12 @@ export default function StockSelection() {
     }
     setImages(files)
   }
-  function handleImageTextChange (e) {
-    let name = e.target.name;
-    let imgTxts = imageTexts;
-    imgTxts[name] = e.target.value
-    setImageTexts(imgTxts)
-  }
+  // function handleImageTextChange (e) {
+  //   let name = e.target.name;
+  //   let imgTxts = imageTexts;
+  //   imgTxts[name] = e.target.value
+  //   setImageTexts(imgTxts)
+  // }
   return (
     <Fragment>
       <div className="splitLeft left">
@@ -123,7 +126,7 @@ export default function StockSelection() {
       </div>
       <div className="splitRight right">
         <div className="centered">
-          <img src={helperImg} />
+          <img alt="" src={helperImg} />
           <h2>Add Video Stocks</h2>
           <p>Select the stock video snippets and images, that you want to use for creating the video!</p>
         </div>

@@ -4,12 +4,10 @@ from functionality.serializers import VideoSessionSerializer, StockUploadSeriali
 from functionality.models import VideoSession, StockUpload
 import logging
 from rest_framework.response import Response
-from rest_framework import permissions
 
 
 class VideoSessionViewset(viewsets.ModelViewSet):
     serializer_class = VideoSessionSerializer
-    permission_classes = (permissions.AllowAny,)
 
     def get_queryset(self):
         return VideoSession.objects.filter(added_by__id=self.kwargs["user_id"])
@@ -24,7 +22,6 @@ class VideoSessionViewset(viewsets.ModelViewSet):
 
 class VideoSessionMixin(viewsets.ViewSet):
     serializer_class = VideoSessionSerializer
-    permission_classes = (permissions.AllowAny,)
 
     def get_queryset(self):
         return VideoSession.objects.all()
@@ -58,7 +55,6 @@ class VideoSessionMixin(viewsets.ViewSet):
 class StockUploadViewset(viewsets.ModelViewSet):
     queryset = StockUpload.objects.all()
     serializer_class = StockUploadSerializer
-    permission_classes = (permissions.AllowAny,)
 
     def create(self, request, *args, **kwargs):
         try:

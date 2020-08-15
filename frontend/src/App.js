@@ -11,7 +11,7 @@ import SignIn from './components/bodyComponents/SignIn';
 function App() {
 
   const [loggedIn, setLoggedIn] = useState(false);
-  const [username, setUsername] = useState("");
+  // const [username, setUsername] = useState("");
   const [userId, setUserId] = useState(null)
 
 
@@ -27,11 +27,11 @@ function App() {
       })
         .then(res => res.json())
         .then(json => {
-          setUsername(json.username);
+          // setUsername(json.username);
           setUserId(json.id)
           localStorage.setItem('user-id', json.id)
         });
-    }});
+    }},[loggedIn]);
 
   return (
       <BrowserRouter>
