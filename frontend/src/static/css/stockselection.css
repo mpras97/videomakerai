@@ -1,0 +1,48 @@
+body {
+    font-family: Arial;
+    color: white;
+  }
+  
+  .splitLeft {
+    height: 100%;
+    width: 80%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+
+  .splitRight {
+    height: 100%;
+    width: 20%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }  
+  
+  .left {
+    left: 0;
+    background-color: rgb(99, 91, 91);
+  }
+  
+  .right {
+    right: 0;
+    background-color: rgb(162, 202, 197);
+  }
+  
+  .centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  
+  .centered img {
+    width: 150px;
+    border-radius: 50%;
+  }
+  
