@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 export default function HomePage(props) {
   const history = useHistory()
   function handleClick () {
-    if (props.loggedIn) {
+    if (localStorage.getItem('video-token')) {
       history.push("/video-library")
     }
     else {
@@ -19,6 +19,7 @@ export default function HomePage(props) {
   const handle_logout = () => {
     localStorage.removeItem('video-token');
     localStorage.removeItem('user-id')
+    window.location.reload();
   };
 
   return (
@@ -33,8 +34,8 @@ export default function HomePage(props) {
       <h1 className="cover-heading">CREATE AN ANIMATION WITHOUT KNOWING HOW TO ANIMATE</h1>
       <p className="lead">VideoMakerAI lets you automatically create videos from a group of images and videos</p>
       <p className="lead">
-        <Button variant="secondary" onClick={handleClick}>{!props.loggedIn ? `Get Started` : `Go To Your Library`}</Button>&emsp;
-        {props.loggedIn ? (
+        <Button variant="secondary" onClick={handleClick}>{!localStorage.getItem('video-token') ? `Get Started` : `Go To Your Library`}</Button>&emsp;
+        {localStorage.getItem('video-token')? (
           <Button variant="danger" onClick={handle_logout}>LogOut</Button>
         ) : null}
       </p>
