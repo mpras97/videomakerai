@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Navbar from '../Navbar'
 import Footer from '../Footer'
 import '../../App.css';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 export default function HomePage(props) {
   const history = useHistory()

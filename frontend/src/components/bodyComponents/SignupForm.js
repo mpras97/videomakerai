@@ -9,7 +9,7 @@ export default function SignupForm () {
 
   function handle_change (e) {
     const name = e.target.name;
-    const value = e.target.value;
+    // const value = e.target.value;
     if (name === "username") {
       setUsername(e.target.value)
     }
@@ -39,7 +39,7 @@ export default function SignupForm () {
       fetch('http://localhost:8000/token-auth/', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(postJson)
       })
