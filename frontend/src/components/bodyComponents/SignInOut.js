@@ -3,10 +3,13 @@ import { useHistory } from 'react-router-dom';
 import '../../App.css';
 
 export default function SignInOut () {
+
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   function handleSubmit (e) {
+
     e.preventDefault()
     if (username === "admin" && password === "password") {
       history.push("/get-started");
