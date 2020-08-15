@@ -1,14 +1,14 @@
 version: '3.7'
 services:
   aivideo_backend:
-    image: check
+    image: shivinagarwal/hackathon:ai-video-backend
     container_name: aivideo_backend
     environment:
       DJANGO_SETTINGS_MODULE: 'backend.settings'
     ports:
       - "8000:8000"
   aivideo_frontend:
-    image: check-fe
+    image: shivinagarwal/hackathon:ai-video-frontend
     container_name: aivideo_frontend
     ports:
       - "80:3000"
