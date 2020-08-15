@@ -17,15 +17,12 @@ RUN set -ex && \
     echo "JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/" >> /etc/environment  && \
     . /etc/environment
 
-WORKDIR /hackathon
-
-COPY . .
-
-RUN /usr/local/bin/pip3.6 install -r ./requirements.txt
-
 ENV PYTHONUNBUFFERED 1
 
-COPY ./supervisor-config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+WORKDIR /hackathon/frontend
+RUN npm install
 
+WORKDIR /hackathon
+COPY ./frontend .
+COPY ./supervisor-config/supervisor-fe.conf /etc/supervisor/conf.d/supervisord.conf
 CMD ["/usr/bin/supervisord"]
-
