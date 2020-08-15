@@ -11,7 +11,6 @@ export default function StockSelection() {
   const [imageTexts, setImageTexts] = useState([]);
 
   function saveImages(e) {
-    console.log(images)
 
     /*
     * Create a video session.
@@ -49,7 +48,13 @@ export default function StockSelection() {
           })
             .then(res => res.json())
             .then(json => {
-              console.log(json)
+              let token = localStorage.getItem("video-token")
+              if (token) {
+                history.push('/video-library')
+              }
+              else {
+                history.push('/login')
+              }
             })
             .catch(err => alert(err.message))
         }
