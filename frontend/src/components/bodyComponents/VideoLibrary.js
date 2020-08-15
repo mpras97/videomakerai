@@ -10,7 +10,6 @@ export default function VideoLibrary(props) {
   const vid1 = require("../../static/vid/vid1.mp4")
   const vid2 = require("../../static/vid/vid2.mp4")
   const img = require("../../static/vid/finalbg.jpg")
-  const [userId, setUserId] = useState(null)
   const [vids, setVids] = useState(null)
   const [filteredVids, setFilteredVids] = useState([])
   const [selectedConstant, setSelectedConstant] = useState(0)
@@ -18,7 +17,6 @@ export default function VideoLibrary(props) {
   useEffect(() => {
     if (localStorage.length !== 0) {
       let userId = localStorage.getItem("user-id")
-      setUserId(userId)
       console.log(userId)
       fetch(`http://localhost:8000/functionality/video_session_list/${userId}/`, {
         method: 'GET',
@@ -54,10 +52,10 @@ export default function VideoLibrary(props) {
     <Fragment>
       <div id="myBtnContainer">
         <button className={`btn ${selectedConstant === 0 ? "active" : ""}`} onClick={() => filterVideos(0)}> Show all</button>
-        <button className={`btn ${selectedConstant === 1 ? "active" : ""}`} onclick={() => filterVideos(1)}> Travel</button>
-        <button className={`btn ${selectedConstant === 2 ? "active" : ""}`} onclick={() => filterVideos(2)}> Wedding</button>
-        <button className={`btn ${selectedConstant === 3 ? "active" : ""}`} onclick={() => filterVideos(3)}> Business</button>
-        <button className={`btn ${selectedConstant === 4 ? "active" : ""}`} onclick={() => filterVideos(4)}> Intro</button>
+        <button className={`btn ${selectedConstant === 1 ? "active" : ""}`} onClick={() => filterVideos(1)}> Travel</button>
+        <button className={`btn ${selectedConstant === 2 ? "active" : ""}`} onClick={() => filterVideos(2)}> Wedding</button>
+        <button className={`btn ${selectedConstant === 3 ? "active" : ""}`} onClick={() => filterVideos(3)}> Business</button>
+        <button className={`btn ${selectedConstant === 4 ? "active" : ""}`} onClick={() => filterVideos(4)}> Intro</button>
 
       </div>
       <div className="row">

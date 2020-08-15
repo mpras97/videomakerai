@@ -9,25 +9,70 @@ export default function StockSelection() {
   const [image, setImage] = useState(null);
   const [images, setImages] = useState([]);
   const [imageTexts, setImageTexts] = useState([]);
+
+  function saveImages(e) {
+    console.log(images)
+
+    /*
+    * Create a video session.
+    * TODO: Added session type form previous page.
+    * */
+    let userId = localStorage.getItem("user-id")
+    let videoSessionID = null
+    console.log(userId)
+    let data = {
+      'name': Math.random().toString(36).substring(7),
+      'added_by': userId,
+      'transforms': 'transforms',
+      'session_type': 1
+    }
+
+
+
+    fetch('http://localhost:8000/functionality/create_video_session/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(json => {
+        videoSessionID = json.id
+        for ( let i = 0; i < images.length; i++) {
+          const formData = new FormData();
+          formData.set("uploaded_file", images[i])
+          formData.set("session", videoSessionID)
+          fetch('http://localhost:8000/functionality/stock_upload/', {
+            method: 'POST',
+            body: formData
+          })
+            .then(res => res.json())
+            .then(json => {
+              console.log(json)
+            })
+            .catch(err => alert(err.message))
+        }
+
+      })
+      .catch(err => alert(err.message));
+  }
+
   function ImageUpload (e) {
     
-    var files = e.target.files
+    let files = e.target.files
 
     for (let i = 0, f; f = files[i]; i++) {
-      console.log(f.type)
-      // if ((!f.type.match('image.*')) || (!f.type.match('video.*'))) {
-      //   continue
-      // }
-      var reader = new FileReader()
+      let reader = new FileReader()
 
-      var texts = imageTexts
+      let texts = imageTexts
       texts.push("")
       setImageTexts(texts)
 
       if (f.type.match('image.*')) {
         reader.onload = (function(theFile) {
           return function(e) {
-            var span = document.createElement('span');
+            let span = document.createElement('span');
             span.innerHTML = 
             [
               '<img src="', 
@@ -39,25 +84,13 @@ export default function StockSelection() {
           }
         })(f)
       }
-      else if (f.type.match('video.*')) {
-        reader.onload = (function(theFile) {
-          var span = document.createElement('span')
-          span.innerHTML = [
-            '<video controls class="video"><source src=',e.target.result,
-            '" title="', escape(theFile.name),
-            '"/></video><input type="text" onChange={handleImageTextChange} value="',imageTexts[i],
-            '" name="',i,'" /><br />'
-          ].join('')
-          document.getElementById("list").insertBefore(span, null)
-        })(f)
-      }
-
       reader.readAsDataURL(f)
     }
+    setImages(files)
   }
   function handleImageTextChange (e) {
-    var name = e.target.name;
-    var imgTxts = imageTexts;
+    let name = e.target.name;
+    let imgTxts = imageTexts;
     imgTxts[name] = e.target.value
     setImageTexts(imgTxts)
   }
@@ -71,7 +104,7 @@ export default function StockSelection() {
             onChange={ImageUpload}
             className="fileUpload"
             id="group_image"
-            accept="image/x-png, image/gif, image/jpeg, video/mp4"
+            accept="image/x-png, image/gif, image/jpeg"
             multiple
           />
           {/* {image ?
@@ -80,7 +113,7 @@ export default function StockSelection() {
         {/* {images ? images.forEach((imgSrc, index) => (<img src={imgSrc} id={`target_${index}`} />)) : null} */}
         <output id="list"></output><br/>
         <br/>
-        <Button variant="primary">Create video</Button>
+        <Button variant="primary" onClick={saveImages}>Create video</Button>
         </div>
       </div>
       <div className="splitRight right">
