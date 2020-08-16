@@ -20,7 +20,6 @@ export default function StockSelection() {
     * */
     let userId = localStorage.getItem("user-id")
     let videoSessionID = null
-    console.log(userId)
     let data = {
       'name': Math.random().toString(36).substring(7),
       'added_by': userId,
@@ -40,7 +39,6 @@ export default function StockSelection() {
     })
       .then(res => res.json())
       .then(json => {
-        console.log(json)
         setVideoSessionId(json.id)
         videoSessionID = json.id
         setTotalCount(images.length)
@@ -57,27 +55,16 @@ export default function StockSelection() {
           })
             .then(res => res.json())
             .then(json => {
-              let token = localStorage.getItem("video-token")
               setUploadedCount(uploadedCount + 1)
-              // if (token) {
-              //   history.push('/video-library')
-              // }
-              // else {
-              //   history.push('/login')
-              // }
             })
             .catch(err => alert(err.message))
         }
-        console.log("Videos uploaded")
       })
       .catch(err => alert(err.message));
   }
 
   function createVideo () {
-    console.log("Started video creation. This will take a few minutes")
-    console.log(videoSessionId)
     let data = {"video_session_id": videoSessionId}
-    // console.log(_data)
     fetch("http://localhost:8000/functionality/final_create_video/", {
       method: 'POST',
       headers: {
@@ -88,11 +75,10 @@ export default function StockSelection() {
     })
       .then(res => res.json())
       .then(json => {
-        console.log("Completed")
+        console.log(json)
       })
       .catch(err => {
-        console.log("error")
-        console.log(err)
+        alert(err)
       })
   }
 
@@ -126,15 +112,7 @@ export default function StockSelection() {
     }
     setImages(files)
   }
-  // function handleImageTextChange (e) {
-  //   let name = e.target.name;
-  //   let imgTxts = imageTexts;
-  //   imgTxts[name] = e.target.value
-  //   setImageTexts(imgTxts)
-  // }
-  console.log(totalCount)
-  console.log(uploadedCount)
-  console.log(videoSessionId)
+
   return (
     <Fragment>
       <div className="splitLeft left">
