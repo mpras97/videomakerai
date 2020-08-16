@@ -16,9 +16,10 @@ class VideoSession(models.Model):
         [INTRO, "INTRO"]
     ]
 
+    name = models.CharField(max_length=255)
     added_by = models.ForeignKey(User, on_delete=models.CASCADE)
     transforms = models.TextField()
-    final_video = models.FileField()
+    final_video = models.FileField(null=True)
     session_type = models.IntegerField(choices=SESSION_TYPES, default=INTRO)
 
 

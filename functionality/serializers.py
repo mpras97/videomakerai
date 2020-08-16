@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from functionality.models import VideoSession, StockUpload
 
+
 class VideoSessionSerializer(serializers.ModelSerializer):
 
     class Meta:
