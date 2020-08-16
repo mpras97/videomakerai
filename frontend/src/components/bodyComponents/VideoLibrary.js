@@ -69,7 +69,7 @@ export default function VideoLibrary(props) {
           <div key={item.id} className="column nature">
             /
             <div className="content">
-              <video control src={item.final_video}/>
+              <video src={item.final_video}/>
               <h4>{item.name}</h4>
             </div>
           </div>

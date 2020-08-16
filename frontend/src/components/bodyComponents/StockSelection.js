@@ -76,6 +76,7 @@ export default function StockSelection() {
       .then(res => res.json())
       .then(json => {
         console.log(json)
+        alert("Your video has been created, successfully!!")
       })
       .catch(err => {
         alert(err)
