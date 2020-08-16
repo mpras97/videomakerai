@@ -4,6 +4,8 @@ import glob
 import os
 import time
 
+from functionality.models import VideoSession
+
 image_filters = []
 
 sepia_filter = np.array([[0.272, 0.534, 0.131],
@@ -75,6 +77,7 @@ def transition_by_fade(img1, img2, out):
         out.write(output)
     return out
 
+
 def horizontal_transition_by_in_out(img1, img2, out):
     video_size = (640, 480)
     img1 = cv2.resize(img1, video_size, interpolation=cv2.INTER_AREA)
@@ -88,6 +91,7 @@ def horizontal_transition_by_in_out(img1, img2, out):
         final_image[:,max_width:int(video_size[0]),:] = cropped_img2
         out.write(final_image)
     return out
+
 
 def vertical_transition_by_in_out(img1, img2, out):
     video_size = (640, 480)
@@ -103,11 +107,12 @@ def vertical_transition_by_in_out(img1, img2, out):
         out.write(final_image)
     return out
 
-def create_video(files_location, file_name, fps=0.5, video_type=1):
+
+def create_video(files_location, file_name, video_session, fps=0.5, video_type=1):
     """
     video_type is 1 for colourful else 0 for vintage
     """
-    video_name = "./created_vids/" + file_name + ".avi"
+    video_name = file_name + ".avi"
     video_size = (640, 480)
     out = cv2.VideoWriter(video_name, cv2.VideoWriter_fourcc(*'DIVX'), fps, video_size)
     for filename in files_location:
@@ -115,7 +120,9 @@ def create_video(files_location, file_name, fps=0.5, video_type=1):
         resized = cv2.resize(img, video_size, interpolation=cv2.INTER_AREA)
         if video_type == 0:
             resized = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
-        for i in range(20):
+        for i in range(10):
             out.write(resized)
-
     out.release()
+    video_session = VideoSession.objects.get(id=video_session)
+    video_session.final_upload = video_name
+    video_session.save()

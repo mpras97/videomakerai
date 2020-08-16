@@ -77,13 +77,14 @@ export default function StockSelection() {
     console.log("Started video creation. This will take a few minutes")
     console.log(videoSessionId)
     let data = {"video_session_id": videoSessionId}
-    fetch("http://localhost:8000/functionality/create_video/", {
+    // console.log(_data)
+    fetch("http://localhost:8000/functionality/final_create_video/", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('video-token')}`
       },
-      body: data,
+      body: JSON.stringify(data)
     })
       .then(res => res.json())
       .then(json => {
