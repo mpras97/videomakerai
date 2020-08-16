@@ -1,9 +1,11 @@
 
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
+from rest_framework.views import APIView
 from functionality.serializers import VideoSessionSerializer, StockUploadSerializer
 from functionality.models import VideoSession, StockUpload
 import logging
 from rest_framework.response import Response
+from functionality.vidcreate import *
 
 
 class VideoSessionViewset(viewsets.ModelViewSet):
@@ -59,10 +61,21 @@ class StockUploadViewset(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         try:
             serializer = self.serializer_class(data={'uploaded_file': request.FILES['uploaded_file'],
-                                                     'session': request.data['session'][0]})
+                                                     'session': request.data['session']})
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data, status=200)
         except:
             return Response(status=500)
 
+
+class StartVideoCreationAPI(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, *args, **kwargs):
+        # Start creation of video
+        video_session = VideoSession.objects.get(id=request.data["video_session_id"])
+        stock_uploads = StockUpload.objects.filter(session=video_session)
+        file_locations = [stock_upload.uploaded_file.path for stock_upload in stock_uploads]
+        create_video(file_locations, video_session.name, video_session=video_session.id)
+        return Response(status=200)
